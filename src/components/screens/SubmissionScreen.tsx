@@ -416,15 +416,30 @@ export const SubmissionScreen: React.FC<SubmissionScreenProps> = ({
       {/* Action Navigation Footer */}
       <div className="w-full flex justify-center items-center pt-4 border-t border-amber-300/30 z-20">
         {votingState.isSubmitted ? (
-          <button
-            onClick={() => {
-              soundFx.playClick();
-              setShowReceiptModal(true);
-            }}
-            className="px-8 py-3 rounded-full bg-gradient-to-r from-amber-300 via-amber-200 to-amber-400 hover:from-amber-200 hover:to-amber-300 text-slate-950 font-sans-clean font-bold text-xs sm:text-sm tracking-widest uppercase transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-lg"
-          >
-            Show Receipt 🗳️
-          </button>
+          <div className="flex flex-wrap gap-4 justify-center items-center">
+            <button
+              onClick={() => {
+                soundFx.playClick();
+                setShowReceiptModal(true);
+              }}
+              className="px-8 py-3 rounded-full bg-gradient-to-r from-amber-300 via-amber-200 to-amber-400 hover:from-amber-200 hover:to-amber-300 text-slate-950 font-sans-clean font-bold text-xs sm:text-sm tracking-widest uppercase transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-lg"
+            >
+              Show Receipt 🗳️
+            </button>
+            {import.meta.env.VITE_ALLOW_REVOTE === 'true' && (
+              <button
+                onClick={() => {
+                  soundFx.playClick();
+                  if (window.confirm("Bạn có chắc chắn muốn hủy phiếu bầu hiện tại để tiến hành chọn lại từ đầu? Số liệu vote cũ của bạn sẽ bị trừ khỏi bảng xếp hạng live.")) {
+                    onReset();
+                  }
+                }}
+                className="px-8 py-3 rounded-full border border-amber-400/40 bg-amber-400/10 hover:bg-amber-400/20 text-amber-200 font-sans-clean font-bold text-xs sm:text-sm tracking-widest uppercase transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-lg"
+              >
+                Revote 🔄
+              </button>
+            )}
+          </div>
         ) : (
           <div className="w-full flex justify-between items-center">
             <button

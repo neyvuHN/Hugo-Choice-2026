@@ -226,7 +226,6 @@ export const GoogleAuthModal: React.FC<GoogleAuthModalProps> = ({
               }}
               className="w-full py-2 px-4 rounded-xl bg-transparent hover:bg-white/5 text-gray-400 hover:text-white font-sans-clean text-xs flex items-center justify-center transition-colors cursor-pointer"
             >
-              <span>Bỏ qua (Chưa đăng nhập)</span>
             </button>
           </div>
         </div>

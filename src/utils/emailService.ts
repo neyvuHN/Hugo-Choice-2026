@@ -25,7 +25,7 @@ export async function sendBallotEmailAuto(votingState: VotingState): Promise<Aut
   if (!targetEmail) {
     return {
       success: false,
-      message: 'Chưa có thông tin Email/Gmail để tự động gửi.'
+      message: 'Missing Email/Gmail information for auto-sending.'
     };
   }
 
@@ -61,7 +61,7 @@ export async function sendBallotEmailAuto(votingState: VotingState): Promise<Aut
       recordSentEmailLog(targetEmail, votingState);
       return {
         success: true,
-        message: `✉️ Hệ thống đã tự động gửi Email xác nhận tới ${targetEmail}!`
+        message: `✉️ Confirmation email automatically sent to ${targetEmail}!`
       };
     }
   } catch (err) {
@@ -115,13 +115,13 @@ export async function sendBallotEmailAuto(votingState: VotingState): Promise<Aut
       recordSentEmailLog(targetEmail, votingState);
       return {
         success: true,
-        message: `✉️ Đã tự động gửi Email xác nhận tới ${targetEmail} thành công!`
+        message: `✉️ Confirmation email sent to ${targetEmail} successfully!`
       };
     } catch (err: any) {
       console.error('❌ EmailJS send error:', err);
       return {
         success: false,
-        message: `⚠️ EmailJS báo lỗi (${err?.text || err?.message || 'Lỗi gửi mail'}). Vui lòng kiểm tra lại EmailJS Service/Template!`
+        message: `⚠️ EmailJS error (${err?.text || err?.message || 'Failed to send email'}). Please check EmailJS Service/Template settings!`
       };
     }
   } else {
@@ -135,7 +135,7 @@ export async function sendBallotEmailAuto(votingState: VotingState): Promise<Aut
   recordSentEmailLog(targetEmail, votingState);
   return {
     success: false,
-    message: `⚠️ Chưa cấu hình đủ VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY!`
+    message: `⚠️ Missing EmailJS environment variables configuration (VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY)!`
   };
 }
 

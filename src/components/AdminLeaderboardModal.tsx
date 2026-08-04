@@ -374,17 +374,21 @@ export const AdminLeaderboardModal: React.FC<AdminLeaderboardModalProps> = ({
 
         {/* Modal Footer */}
         <div className="p-4 bg-black/40 border-t border-white/10 flex items-center justify-between">
-          <button
-            onClick={() => {
-              soundFx.playClick();
-              if (window.confirm("Are you sure you want to clear your ballot and vote again? Your previous votes will be removed from the live tally.")) {
-                if (onClearMyBallot) onClearMyBallot();
-              }
-            }}
-            className="px-4 py-2 rounded-full border border-red-500/50 bg-red-500/10 hover:bg-red-500/30 text-red-400 font-serif-display font-bold text-xs transition-colors cursor-pointer"
-          >
-            Clear My Ballot & Revote
-          </button>
+          {import.meta.env.VITE_ALLOW_REVOTE === 'true' ? (
+            <button
+              onClick={() => {
+                soundFx.playClick();
+                if (window.confirm("Are you sure you want to clear your ballot and vote again? Your previous votes will be removed from the live tally.")) {
+                  if (onClearMyBallot) onClearMyBallot();
+                }
+              }}
+              className="px-4 py-2 rounded-full border border-red-500/50 bg-red-500/10 hover:bg-red-500/30 text-red-400 font-serif-display font-bold text-xs transition-colors cursor-pointer"
+            >
+              Clear My Ballot & Revote
+            </button>
+          ) : (
+            <div />
+          )}
 
           <button
             onClick={() => {
