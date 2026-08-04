@@ -19,6 +19,7 @@ import { BestEventScreen } from './components/screens/BestEventScreen';
 import { RookieScreen } from './components/screens/RookieScreen';
 import { PerfectDuoScreen } from './components/screens/PerfectDuoScreen';
 import { SubmissionScreen } from './components/screens/SubmissionScreen';
+import { StatisticsScreen } from './components/screens/StatisticsScreen';
 
 const STORAGE_KEY_VOTE = 'hugo_award_2026_user_state';
 const STORAGE_KEY_RESULTS = 'hugo_award_2026_live_results';
@@ -321,7 +322,7 @@ export default function App() {
         votingState={votingState}
         onNavigate={navigateTo}
         onOpenBallotDrawer={() => setIsBallotDrawerOpen(true)}
-        onOpenAdminLeaderboard={() => setIsAdminModalOpen(true)}
+        onOpenAdminLeaderboard={() => navigateTo('statistics')}
         onOpenGoogleLogin={() => setIsGoogleAuthOpen(true)}
         onReset={handleReset}
         onLogout={handleReset}
@@ -445,7 +446,15 @@ export default function App() {
             onSubmitBallot={handleSubmitBallot}
             onNavigate={navigateTo}
             onReset={handleClearMyBallot}
-            onOpenLeaderboard={() => setIsAdminModalOpen(true)}
+            onOpenLeaderboard={() => navigateTo('statistics')}
+          />
+        )}
+
+        {currentStep === 'statistics' && (
+          <StatisticsScreen
+            results={liveResults}
+            onBack={() => navigateTo('landing')}
+            votingState={votingState}
           />
         )}
       </main>

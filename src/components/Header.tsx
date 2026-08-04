@@ -219,8 +219,8 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={handleToggleBgMusic}
             className={`relative p-2 rounded-full border transition-all duration-300 flex items-center justify-center shrink-0 cursor-pointer ${isBgMusicPlaying
-                ? 'bg-fuchsia-900/40 border-fuchsia-400/60 text-fuchsia-200 hover:bg-fuchsia-800/50 shadow-[0_0_15px_rgba(232,121,249,0.5)]'
-                : 'bg-black/40 hover:bg-black/60 border-white/20 text-white/90 hover:text-fuchsia-300'
+              ? 'bg-fuchsia-900/40 border-fuchsia-400/60 text-fuchsia-200 hover:bg-fuchsia-800/50 shadow-[0_0_15px_rgba(232,121,249,0.5)]'
+              : 'bg-black/40 hover:bg-black/60 border-white/20 text-white/90 hover:text-fuchsia-300'
               }`}
             title={isBgMusicPlaying ? "Pause ambient vibes 🌸" : "Play chill flower vibes 🌸"}
           >
@@ -233,7 +233,7 @@ export const Header: React.FC<HeaderProps> = ({
 
 
           {/* Live Results Leaderboard Button */}
-          {votingState.userName === 'Dobietlaai153@!!' && (
+          {votingState.userEmail?.toLowerCase() === 'hugoclub.dut@gmail.com' && (
             <button
               onClick={() => {
                 soundFx.playClick();
@@ -418,8 +418,8 @@ export const Header: React.FC<HeaderProps> = ({
                 setIsMobileMenuOpen(false);
               }}
               className={`w-full p-3 rounded-xl flex items-center justify-between text-xs font-semibold transition-all border cursor-pointer ${currentStep === 'landing'
-                  ? 'bg-amber-500/20 text-amber-200 border-amber-400/50 shadow-md'
-                  : 'bg-white/5 hover:bg-white/10 text-gray-200 border-white/10'
+                ? 'bg-amber-500/20 text-amber-200 border-amber-400/50 shadow-md'
+                : 'bg-white/5 hover:bg-white/10 text-gray-200 border-white/10'
                 }`}
             >
               <div className="flex items-center space-x-2.5">
@@ -437,8 +437,8 @@ export const Header: React.FC<HeaderProps> = ({
                 setIsMobileMenuOpen(false);
               }}
               className={`w-full p-3 rounded-xl flex items-center justify-between text-xs font-semibold transition-all border cursor-pointer ${currentStep === 'process'
-                  ? 'bg-amber-500/20 text-amber-200 border-amber-400/50 shadow-md'
-                  : 'bg-white/5 hover:bg-white/10 text-gray-200 border-white/10'
+                ? 'bg-amber-500/20 text-amber-200 border-amber-400/50 shadow-md'
+                : 'bg-white/5 hover:bg-white/10 text-gray-200 border-white/10'
                 }`}
             >
               <div className="flex items-center space-x-2.5">
@@ -451,7 +451,7 @@ export const Header: React.FC<HeaderProps> = ({
 
 
             {/* Live Stats Leaderboard */}
-            {votingState.userName === 'Dobietlaai153@!!' && (
+            {votingState.userEmail?.toLowerCase() === 'hugoclub.dut@gmail.com' && (
               <button
                 onClick={() => {
                   soundFx.playClick();
@@ -484,8 +484,8 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={handleToggleSound}
                 className={`p-2.5 rounded-xl border flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${isMuted
-                    ? 'bg-red-950/30 border-red-500/30 text-red-300'
-                    : 'bg-amber-500/10 border-amber-400/30 text-amber-200'
+                  ? 'bg-red-950/30 border-red-500/30 text-red-300'
+                  : 'bg-amber-500/10 border-amber-400/30 text-amber-200'
                   }`}
               >
                 {isMuted ? <VolumeX className="w-4 h-4 text-red-300" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
@@ -495,8 +495,8 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={handleToggleBgMusic}
                 className={`p-2.5 rounded-xl border flex flex-col items-center justify-center space-y-1 transition-all cursor-pointer ${isBgMusicPlaying
-                    ? 'bg-fuchsia-950/40 border-fuchsia-400/50 text-fuchsia-200 shadow-[0_0_12px_rgba(232,121,249,0.3)]'
-                    : 'bg-white/5 border-white/10 text-gray-400'
+                  ? 'bg-fuchsia-950/40 border-fuchsia-400/50 text-fuchsia-200 shadow-[0_0_12px_rgba(232,121,249,0.3)]'
+                  : 'bg-white/5 border-white/10 text-gray-400'
                   }`}
               >
                 <Music className={`w-4 h-4 ${isBgMusicPlaying ? 'text-fuchsia-300 animate-pulse' : ''}`} />
@@ -524,15 +524,15 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="mx-auto w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/35 flex items-center justify-center text-rose-600 mb-4 shadow-sm animate-pulse">
               <LogOut className="w-6 h-6 stroke-[2.5]" />
             </div>
-            
+
             <h3 className="font-serif-display text-lg font-black text-slate-900 tracking-tight mb-2">
               Log Out
             </h3>
-            
+
             <p className="font-sans-clean text-xs sm:text-sm text-slate-800 font-semibold mb-6 leading-relaxed">
               Are you sure you want to log out of your account? Any unsaved progress will be reset.
             </p>
-            
+
             <div className="flex items-center justify-center gap-3">
               <button
                 type="button"

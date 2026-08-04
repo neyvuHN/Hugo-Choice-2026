@@ -8,7 +8,8 @@ export type ScreenStep =
   | 'rookie'
   | 'perfect_duo'
   | 'submission'
-  | 'completed';
+  | 'completed'
+  | 'statistics';
 
 export type HugoTeam = 'prs' | 'hc' | 'bnn' | 'niff';
 
