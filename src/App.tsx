@@ -10,6 +10,8 @@ import { subscribeToAuthChanges, logoutGoogle } from './utils/firebase';
 import { saveUserBallot, getSavedBallotForUser } from './utils/ballotStorage';
 import { ToastContainer } from './components/ToastContainer';
 import { GlitterEffectOverlay } from './components/GlitterEffectOverlay';
+import { preloadVideos, extractVideoUrls } from './utils/videoPreloader';
+import { ROUND2_BEST_MEMBERS, ROUND2_ROOKIES, ROUND2_EVENTS, ROUND2_DUOS } from './data/round2Data';
 
 import { LandingScreen } from './components/screens/LandingScreen';
 import { ProcessModalScreen } from './components/screens/ProcessModalScreen';
@@ -22,13 +24,26 @@ import { PerfectDuoScreen } from './components/screens/PerfectDuoScreen';
 import { SubmissionScreen } from './components/screens/SubmissionScreen';
 import { StatisticsScreen } from './components/screens/StatisticsScreen';
 
-const STORAGE_KEY_VOTE = 'hugo_award_2026_user_state';
-const STORAGE_KEY_RESULTS = 'hugo_award_2026_live_results';
+const VOTE_ROUND = import.meta.env.VITE_VOTE_ROUND || '1';
+const STORAGE_KEY_VOTE = `hugo_award_2026_user_state_r${VOTE_ROUND}`;
+const STORAGE_KEY_RESULTS = `hugo_award_2026_live_results_r${VOTE_ROUND}`;
 
 function toArr(val: any): string[] {
   if (Array.isArray(val)) return val;
   if (typeof val === 'string' && val.trim() !== '') return [val];
   return [];
+}
+
+// Preload all nominee videos at startup (background, non-blocking)
+function preloadAllNomineeVideos() {
+  const allCandidates = [
+    ...Object.values(ROUND2_BEST_MEMBERS).flat(),
+    ...ROUND2_ROOKIES,
+    ...ROUND2_EVENTS,
+    ...ROUND2_DUOS,
+  ];
+  // Stagger slightly so we don't hammer bandwidth all at once
+  setTimeout(() => preloadVideos(extractVideoUrls(allCandidates)), 2000);
 }
 
 export default function App() {
@@ -86,6 +101,12 @@ export default function App() {
       // Ignore
     }
   }, [votingState]);
+
+  // Preload all nominee videos early so they're buffered before user reaches voting screens
+  useEffect(() => {
+    preloadAllNomineeVideos();
+  }, []);
+
 
   // Save live results to localStorage
   useEffect(() => {

@@ -45,14 +45,17 @@ if (isFirebaseConfigured) {
   }
 }
 
+const VOTE_ROUND = import.meta.env.VITE_VOTE_ROUND || '1';
+
 export const saveBallotToFirestore = async (ballotData: any) => {
   if (!db) return;
   try {
     const docId = (ballotData.userEmail || ballotData.userName || 'anonymous')
       .toLowerCase()
       .replace(/[^a-z0-9_@.-]/g, '_');
-    await setDoc(doc(db, 'ballots', docId), {
+    await setDoc(doc(db, `ballots_r${VOTE_ROUND}`, docId), {
       ...ballotData,
+      round: VOTE_ROUND,
       updatedAt: new Date().toISOString()
     }, { merge: true });
   } catch (err) {

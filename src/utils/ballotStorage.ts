@@ -1,8 +1,9 @@
 import { VotingState, HugoTeam } from '../types';
 import { saveBallotToFirestore } from './firebase';
 
-const STORAGE_KEY_SAVED_BALLOTS = 'hugo_award_saved_ballots_map_2026';
-const STORAGE_KEY_CURRENT_VOTE = 'hugo_award_2026_user_state';
+const VOTE_ROUND = import.meta.env.VITE_VOTE_ROUND || '1';
+const STORAGE_KEY_SAVED_BALLOTS = `hugo_award_saved_ballots_map_2026_r${VOTE_ROUND}`;
+const STORAGE_KEY_CURRENT_VOTE = `hugo_award_2026_user_state_r${VOTE_ROUND}`;
 
 export interface SavedBallotRecord {
   userEmail?: string;
