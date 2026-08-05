@@ -271,7 +271,7 @@ export const SubmissionScreen: React.FC<SubmissionScreenProps> = ({
   };
 
   const handleSubmit = async () => {
-    soundFx.playFanfare();
+    soundFx.playSubmit();
     confetti({
       particleCount: 120,
       spread: 80,
@@ -405,7 +405,7 @@ export const SubmissionScreen: React.FC<SubmissionScreenProps> = ({
                     </div>
                   ))
                 ) : (
-                  <span className="text-xs text-amber-200/50 italic">Incomplete (2 required)</span>
+                  <span className="text-xs text-amber-200/50 italic">Incomplete (1 required)</span>
                 )}
               </div>
             </div>

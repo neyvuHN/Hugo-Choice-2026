@@ -114,7 +114,7 @@ export const EventInfoPanel: React.FC<EventInfoPanelProps> = ({
                 August 5th - August 7th
               </span>
               <p className="text-xs sm:text-sm text-white font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
-                The Top 5 nominees for each award will be revealed. During this round, you will cast your final votes for 2 people/events per category.
+                The Top 5 nominees for each award will be revealed. During this round, you will cast your final vote for 1 person/event per category.
               </p>
             </div>
           </div>

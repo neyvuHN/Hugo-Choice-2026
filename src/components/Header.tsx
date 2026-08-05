@@ -128,10 +128,10 @@ export const Header: React.FC<HeaderProps> = ({
   // Count votes cast
   const votesCount = [
     Boolean(votingState.selectedTeam),
-    Array.isArray(votingState.selectedBestMember) && votingState.selectedBestMember.length === 2,
-    Array.isArray(votingState.selectedBestEvent) && votingState.selectedBestEvent.length === 2,
-    Array.isArray(votingState.selectedRookie) && votingState.selectedRookie.length === 2,
-    Array.isArray(votingState.selectedDuo) && votingState.selectedDuo.length === 2
+    Array.isArray(votingState.selectedBestMember) && votingState.selectedBestMember.length === 1,
+    Array.isArray(votingState.selectedBestEvent) && votingState.selectedBestEvent.length === 1,
+    Array.isArray(votingState.selectedRookie) && votingState.selectedRookie.length === 1,
+    Array.isArray(votingState.selectedDuo) && votingState.selectedDuo.length === 1
   ].filter(Boolean).length;
 
   return (

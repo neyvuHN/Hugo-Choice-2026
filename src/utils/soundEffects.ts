@@ -122,6 +122,40 @@ class SoundManager {
       console.warn('Paper slide sound error:', e);
     }
   }
+
+  public playNomineeClick() {
+    if (this.isMuted) return;
+    try {
+      const audio = new Audio('/click%20next.mp3');
+      audio.volume = 0.7;
+      audio.currentTime = 0;
+      const promise = audio.play();
+      if (promise !== undefined) {
+        promise.catch((err) => {
+          console.warn('Nominee click sound play failed:', err);
+        });
+      }
+    } catch (e) {
+      console.warn('Nominee click sound error:', e);
+    }
+  }
+
+  public playSubmit() {
+    if (this.isMuted) return;
+    try {
+      const audio = new Audio('/submit%20form.mp3');
+      audio.volume = 0.9;
+      audio.currentTime = 0;
+      const promise = audio.play();
+      if (promise !== undefined) {
+        promise.catch((err) => {
+          console.warn('Submit sound play failed:', err);
+        });
+      }
+    } catch (e) {
+      console.warn('Submit sound error:', e);
+    }
+  }
 }
 
 export const soundFx = new SoundManager();

@@ -103,7 +103,7 @@ export const ProcessModalScreen: React.FC<ProcessModalScreenProps> = ({ onProcee
               <span className="font-mono text-amber-100 text-xs">August 5th - August 7th</span>
             </li>
             <li className="pt-1 text-slate-100 font-normal leading-normal">
-              <span className="font-semibold text-amber-200">Voting Requirement:</span> Select exactly 2 nominees per category in Round 2.
+              <span className="font-semibold text-amber-200">Voting Requirement:</span> Select exactly 1 nominee per category in Round 2.
             </li>
           </ul>
         </div>

@@ -9,6 +9,7 @@ import { GoogleAuthModal } from './components/GoogleAuthModal';
 import { subscribeToAuthChanges, logoutGoogle } from './utils/firebase';
 import { saveUserBallot, getSavedBallotForUser } from './utils/ballotStorage';
 import { ToastContainer } from './components/ToastContainer';
+import { GlitterEffectOverlay } from './components/GlitterEffectOverlay';
 
 import { LandingScreen } from './components/screens/LandingScreen';
 import { ProcessModalScreen } from './components/screens/ProcessModalScreen';
@@ -313,6 +314,9 @@ export default function App() {
 
   return (
     <BackgroundLandscape>
+      {/* Global Glitter Canvas Effect */}
+      <GlitterEffectOverlay />
+
       {/* Toast Notification Container */}
       <ToastContainer />
 

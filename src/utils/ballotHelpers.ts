@@ -16,7 +16,7 @@ export function getMemberByIdOrName(val: string | null): ClubMember | null {
   return getAllMembers().find(m => m.id === val || m.name === val) || null;
 }
 
-export function getResolvedBestMemberName(val: string[] | string | null, fallback = 'Incomplete (2 required)'): string {
+export function getResolvedBestMemberName(val: string[] | string | null, fallback = 'Incomplete (1 required)'): string {
   if (!val) return fallback;
   const arr = Array.isArray(val) ? val : [val];
   if (arr.length === 0) return fallback;
@@ -40,7 +40,7 @@ export function getResolvedEvent(eventId: string | null) {
   return BEST_EVENTS.find(e => e.id === eventId || e.name === eventId) || null;
 }
 
-export function getResolvedEventName(val: string[] | string | null, fallback = 'Incomplete (2 required)'): string {
+export function getResolvedEventName(val: string[] | string | null, fallback = 'Incomplete (1 required)'): string {
   if (!val) return fallback;
   const arr = Array.isArray(val) ? val : [val];
   if (arr.length === 0) return fallback;
@@ -59,7 +59,7 @@ export function getResolvedEventArray(val: string[] | string | null): string[] {
   });
 }
 
-export function getResolvedRookieName(val: string[] | string | null, fallback = 'Incomplete (2 required)'): string {
+export function getResolvedRookieName(val: string[] | string | null, fallback = 'Incomplete (1 required)'): string {
   if (!val) return fallback;
   const arr = Array.isArray(val) ? val : [val];
   if (arr.length === 0) return fallback;
@@ -78,7 +78,7 @@ export function getResolvedRookieArray(val: string[] | string | null): string[] 
   });
 }
 
-export function getResolvedDuoName(val: string[] | string | null, fallback = 'Incomplete (2 required)'): string {
+export function getResolvedDuoName(val: string[] | string | null, fallback = 'Incomplete (1 required)'): string {
   if (!val) return fallback;
   const arr = Array.isArray(val) ? val : [val];
   if (arr.length === 0) return fallback;
