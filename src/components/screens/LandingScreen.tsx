@@ -96,7 +96,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({ userName, onStart,
             {/* Banner Text */}
             <div className="relative z-10 flex items-center gap-2 text-amber-200 font-serif-display text-xs sm:text-sm font-extrabold tracking-[0.2em] uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-300 animate-ping" />
-              <span>Round 1 • Nominations</span>
+              <span>Round 2 • Final Vote</span>
             </div>
           </div>
 

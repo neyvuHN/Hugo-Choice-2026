@@ -128,10 +128,10 @@ export const Header: React.FC<HeaderProps> = ({
   // Count votes cast
   const votesCount = [
     Boolean(votingState.selectedTeam),
-    Array.isArray(votingState.selectedBestMember) && votingState.selectedBestMember.length === 3,
-    Array.isArray(votingState.selectedBestEvent) && votingState.selectedBestEvent.length === 3,
-    Array.isArray(votingState.selectedRookie) && votingState.selectedRookie.length === 3,
-    Array.isArray(votingState.selectedDuo) && votingState.selectedDuo.length === 3
+    Array.isArray(votingState.selectedBestMember) && votingState.selectedBestMember.length === 2,
+    Array.isArray(votingState.selectedBestEvent) && votingState.selectedBestEvent.length === 2,
+    Array.isArray(votingState.selectedRookie) && votingState.selectedRookie.length === 2,
+    Array.isArray(votingState.selectedDuo) && votingState.selectedDuo.length === 2
   ].filter(Boolean).length;
 
   return (
@@ -139,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Background Audio */}
       <audio
         ref={audioRef}
-        src="/ambient-bg.mp3"
+        src="/La Valse de L'Amour.mp3"
         loop
         autoPlay
         onPlay={() => setIsBgMusicPlaying(true)}

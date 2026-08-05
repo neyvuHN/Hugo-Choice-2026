@@ -39,7 +39,7 @@ export const BestEventScreen: React.FC<BestEventScreenProps> = ({
     if (selectedList.includes(id)) {
       onSelectEvents(selectedList.filter(eId => eId !== id));
     } else {
-      if (selectedList.length >= 3) {
+      if (selectedList.length >= 2) {
         return;
       }
       onSelectEvents([...selectedList, id]);
@@ -53,7 +53,7 @@ export const BestEventScreen: React.FC<BestEventScreenProps> = ({
     setSearchQuery('');
   };
 
-  const isComplete = selectedList.length === 3;
+  const isComplete = selectedList.length === 2;
   const isSearchEmptyAndNoCustom = searchQuery.trim() && !filteredEvents.some(e => e.name.toLowerCase() === searchQuery.trim().toLowerCase());
 
   return (
@@ -67,7 +67,7 @@ export const BestEventScreen: React.FC<BestEventScreenProps> = ({
           Best Event
         </h2>
         <p className="font-sans-clean text-xs sm:text-sm text-amber-200 font-bold mt-1 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-          Honoring the most impactful event or activity series of the term. Exactly 3 selections required.
+          Honoring the most impactful event or activity series of the term. Exactly 2 selections required.
         </p>
       </div>
 
@@ -143,7 +143,8 @@ export const BestEventScreen: React.FC<BestEventScreenProps> = ({
         {/* Selected Events Placement Bar at Bottom (Reusable Light Glass Tray) */}
         <SelectedTray
           title="Selected Events"
-          items={[0, 1, 2].map(idx => {
+          maxItems={2}
+          items={[0, 1].map(idx => {
             const selectedId = selectedList[idx];
             const eventObj = selectedId ? allEventsList.find(e => e.id === selectedId || e.name === selectedId) : null;
             return eventObj ? { id: eventObj.id, name: eventObj.name, subLabel: eventObj.icon } : null;
@@ -173,8 +174,8 @@ export const BestEventScreen: React.FC<BestEventScreenProps> = ({
         <button
           type="button"
           onClick={() => {
-            if (selectedList.length < 3) {
-              toast.warning(`Please select 3 events before proceeding (${selectedList.length}/3 selected)`);
+            if (selectedList.length < 2) {
+              toast.warning(`Please select 2 events before proceeding (${selectedList.length}/2 selected)`);
               return;
             }
             soundFx.playSelect();
@@ -185,7 +186,7 @@ export const BestEventScreen: React.FC<BestEventScreenProps> = ({
             : 'bg-white/40 border-white/30 text-gray-800 opacity-60'
             }`}
         >
-          <span>Next ({selectedList.length}/3)</span>
+          <span>Next ({selectedList.length}/2)</span>
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>

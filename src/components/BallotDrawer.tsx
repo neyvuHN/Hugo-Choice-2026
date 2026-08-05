@@ -40,27 +40,27 @@ export const BallotDrawer: React.FC<BallotDrawerProps> = ({
     },
     {
       title: 'Best Member',
-      value: getResolvedBestMemberName(votingState.selectedBestMember, 'Incomplete (3 required)'),
+      value: getResolvedBestMemberName(votingState.selectedBestMember, 'Incomplete (2 required)'),
       step: 'best_member' as ScreenStep,
-      filled: Array.isArray(votingState.selectedBestMember) && votingState.selectedBestMember.length === 3
+      filled: Array.isArray(votingState.selectedBestMember) && votingState.selectedBestMember.length === 2
     },
     {
       title: 'Best Event',
-      value: getResolvedEventName(votingState.selectedBestEvent, 'Incomplete (3 required)'),
+      value: getResolvedEventName(votingState.selectedBestEvent, 'Incomplete (2 required)'),
       step: 'best_event' as ScreenStep,
-      filled: Array.isArray(votingState.selectedBestEvent) && votingState.selectedBestEvent.length === 3
+      filled: Array.isArray(votingState.selectedBestEvent) && votingState.selectedBestEvent.length === 2
     },
     {
       title: 'The Rookie',
-      value: getResolvedRookieName(votingState.selectedRookie, 'Incomplete (3 required)'),
+      value: getResolvedRookieName(votingState.selectedRookie, 'Incomplete (2 required)'),
       step: 'rookie' as ScreenStep,
-      filled: Array.isArray(votingState.selectedRookie) && votingState.selectedRookie.length === 3
+      filled: Array.isArray(votingState.selectedRookie) && votingState.selectedRookie.length === 2
     },
     {
       title: 'The Perfect Duo',
-      value: getResolvedDuoName(votingState.selectedDuo, 'Incomplete (3 required)'),
+      value: getResolvedDuoName(votingState.selectedDuo, 'Incomplete (2 required)'),
       step: 'perfect_duo' as ScreenStep,
-      filled: Array.isArray(votingState.selectedDuo) && votingState.selectedDuo.length === 3
+      filled: Array.isArray(votingState.selectedDuo) && votingState.selectedDuo.length === 2
     }
   ];
 

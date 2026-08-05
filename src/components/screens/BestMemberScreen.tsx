@@ -47,7 +47,7 @@ export const BestMemberScreen: React.FC<BestMemberScreenProps> = ({
       const nextList = selectedList.filter(id => id !== member.id && id !== member.name);
       onSelectCandidates(nextList);
     } else {
-      if (selectedList.length >= 3) {
+      if (selectedList.length >= 2) {
         return;
       }
       onSelectCandidates([...selectedList, member.id]);
@@ -61,7 +61,7 @@ export const BestMemberScreen: React.FC<BestMemberScreenProps> = ({
     setSearchQuery('');
   };
 
-  const isComplete = selectedList.length === 3;
+  const isComplete = selectedList.length === 2;
   const isSearchEmptyAndNoCustom = searchQuery.trim() && !filteredList.some(m => m.name.toLowerCase() === searchQuery.trim().toLowerCase());
 
   return (
@@ -75,7 +75,7 @@ export const BestMemberScreen: React.FC<BestMemberScreenProps> = ({
           Best Member
         </h2>
         <p className="font-sans-clean text-xs sm:text-sm text-amber-200 font-bold mt-1 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-          Honoring outstanding individual contributions within the team. Exactly 3 selections required.
+          Honoring outstanding individual contributions within the team. Exactly 2 selections required.
         </p>
       </div>
 
@@ -154,7 +154,8 @@ export const BestMemberScreen: React.FC<BestMemberScreenProps> = ({
         {/* Selected Candidates Placement Bar at Bottom (Reusable Light Glass Tray) */}
         <SelectedTray
           title="Selected Candidates"
-          items={[0, 1, 2].map(idx => {
+          maxItems={2}
+          items={[0, 1].map(idx => {
             const selectedId = selectedList[idx];
             const memObj = selectedId ? allMembers.find(m => m.id === selectedId || m.name === selectedId) : null;
             return memObj ? { id: memObj.id, name: memObj.name } : null;
@@ -185,8 +186,8 @@ export const BestMemberScreen: React.FC<BestMemberScreenProps> = ({
         <button
           type="button"
           onClick={() => {
-            if (selectedList.length < 3) {
-              toast.warning(`Please select 3 candidates before proceeding (${selectedList.length}/3 selected)`);
+            if (selectedList.length < 2) {
+              toast.warning(`Please select 2 candidates before proceeding (${selectedList.length}/2 selected)`);
               return;
             }
             soundFx.playSelect();
@@ -197,7 +198,7 @@ export const BestMemberScreen: React.FC<BestMemberScreenProps> = ({
             : 'bg-white/40 border-white/30 text-gray-800 opacity-60'
             }`}
         >
-          <span>Next ({selectedList.length}/3)</span>
+          <span>Next ({selectedList.length}/2)</span>
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>

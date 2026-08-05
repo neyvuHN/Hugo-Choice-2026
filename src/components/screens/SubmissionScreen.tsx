@@ -405,7 +405,7 @@ export const SubmissionScreen: React.FC<SubmissionScreenProps> = ({
                     </div>
                   ))
                 ) : (
-                  <span className="text-xs text-amber-200/50 italic">Incomplete (3 required)</span>
+                  <span className="text-xs text-amber-200/50 italic">Incomplete (2 required)</span>
                 )}
               </div>
             </div>

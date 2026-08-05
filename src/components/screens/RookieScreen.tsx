@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { filterRookies, getAllRookies, ClubMember } from '../../data/membersData';
+import { getAllRookies, getAllMembers, removeVietnameseTones, getGivenName, ClubMember } from '../../data/membersData';
 import { HugoTeam } from '../../types';
 import { soundFx } from '../../utils/soundEffects';
 import { Search, UserCheck, Plus, ChevronLeft, ChevronRight, CheckCircle2, UserPlus } from 'lucide-react';
@@ -38,8 +38,31 @@ export const RookieScreen: React.FC<RookieScreenProps> = ({
   const [teamFilter, setTeamFilter] = useState<HugoTeam | 'all'>('all');
 
   const selectedList = Array.isArray(selectedRookieIds) ? selectedRookieIds : (selectedRookieIds ? [selectedRookieIds] : []);
-  const allMembers = getAllRookies();
-  const filteredList = filterRookies(searchQuery, teamFilter);
+  const baseRookies = getAllRookies();
+  const extraMembers = getAllMembers().filter(m => 
+    (m.id.startsWith('custom-') || selectedList.includes(m.id) || selectedList.includes(m.name)) &&
+    !baseRookies.some(r => r.id === m.id)
+  );
+  const allMembers = [...baseRookies, ...extraMembers];
+  
+  // Custom filter rookies to include custom members
+  const filteredList = allMembers.filter(member => {
+    const matchesTeam = teamFilter === 'all' || member.teamId === teamFilter;
+    if (!matchesTeam) return false;
+
+    if (!searchQuery.trim()) return true;
+    const normalizedQuery = removeVietnameseTones(searchQuery.trim());
+    const normalizedName = removeVietnameseTones(member.name);
+    return normalizedName.includes(normalizedQuery);
+  }).sort((a, b) => {
+    const givenA = getGivenName(a.name);
+    const givenB = getGivenName(b.name);
+    const normA = removeVietnameseTones(givenA);
+    const normB = removeVietnameseTones(givenB);
+    const comp = normA.localeCompare(normB, 'en');
+    if (comp !== 0) return comp;
+    return removeVietnameseTones(a.name).localeCompare(removeVietnameseTones(b.name), 'en');
+  });
 
   const handleSelectMember = (member: ClubMember) => {
     soundFx.playSelect();
@@ -47,7 +70,7 @@ export const RookieScreen: React.FC<RookieScreenProps> = ({
       const nextList = selectedList.filter(id => id !== member.id && id !== member.name);
       onSelectRookies(nextList);
     } else {
-      if (selectedList.length >= 3) {
+      if (selectedList.length >= 2) {
         return;
       }
       onSelectRookies([...selectedList, member.id]);
@@ -61,7 +84,7 @@ export const RookieScreen: React.FC<RookieScreenProps> = ({
     setSearchQuery('');
   };
 
-  const isComplete = selectedList.length === 3;
+  const isComplete = selectedList.length === 2;
   const isSearchEmptyAndNoCustom = searchQuery.trim() && !filteredList.some(m => m.name.toLowerCase() === searchQuery.trim().toLowerCase());
 
   return (
@@ -75,7 +98,7 @@ export const RookieScreen: React.FC<RookieScreenProps> = ({
           The Rookie
         </h2>
         <p className="font-sans-clean text-xs sm:text-sm text-amber-200 font-bold mt-1 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-          Honoring outstanding newcomers joined this term (10/2025 - 8/2026). Exactly 3 selections required.
+          Honoring outstanding newcomers joined this term (10/2025 - 8/2026). Exactly 2 selections required.
         </p>
       </div>
 
@@ -180,7 +203,8 @@ export const RookieScreen: React.FC<RookieScreenProps> = ({
         {/* Selected Candidates Placement Bar at Bottom (Reusable Light Glass Tray) */}
         <SelectedTray
           title="Selected Rookies"
-          items={[0, 1, 2].map(idx => {
+          maxItems={2}
+          items={[0, 1].map(idx => {
             const selectedId = selectedList[idx];
             const memObj = selectedId ? allMembers.find(m => m.id === selectedId || m.name === selectedId) : null;
             return memObj ? { id: memObj.id, name: memObj.name } : null;
@@ -211,8 +235,8 @@ export const RookieScreen: React.FC<RookieScreenProps> = ({
         <button
           type="button"
           onClick={() => {
-            if (selectedList.length < 3) {
-              toast.warning(`Please select 3 rookies before proceeding (${selectedList.length}/3 selected)`);
+            if (selectedList.length < 2) {
+              toast.warning(`Please select 2 rookies before proceeding (${selectedList.length}/2 selected)`);
               return;
             }
             soundFx.playSelect();
@@ -223,7 +247,7 @@ export const RookieScreen: React.FC<RookieScreenProps> = ({
             : 'bg-white/40 border-white/30 text-gray-800 opacity-60'
             }`}
         >
-          <span>Next ({selectedList.length}/3)</span>
+          <span>Next ({selectedList.length}/2)</span>
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>

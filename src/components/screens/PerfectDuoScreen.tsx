@@ -145,11 +145,10 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
   const [pairs, setPairs] = useState<Array<{ a: string; b: string }>>(() => {
     const list: Array<{ a: string; b: string }> = [
       { a: '', b: '' },
-      { a: '', b: '' },
       { a: '', b: '' }
     ];
     initialList.forEach((str, idx) => {
-      if (idx < 3) {
+      if (idx < 2) {
         const parts = str.split(/\s*&\s*/);
         list[idx] = { a: parts[0] || '', b: parts[1] || '' };
       }
@@ -187,7 +186,7 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
   };
 
   const validPairsCount = pairs.filter(p => p.a && p.b).length;
-  const isComplete = validPairsCount === 3;
+  const isComplete = validPairsCount === 2;
   const currentPair = pairs[activeSlot] || { a: '', b: '' };
 
   return (
@@ -201,7 +200,7 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
           The Perfect Duo
         </h2>
         <p className="font-sans-clean text-xs sm:text-sm text-amber-200 font-bold mt-1 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-          Honoring seamless synergy and chemistry. Exactly 3 pairs required.
+          Honoring seamless synergy and chemistry. Exactly 2 pairs required.
         </p>
       </div>
 
@@ -228,13 +227,14 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
         {/* 3 Slot Tabs Bar placed at Bottom (Reusable Light Glass Tray) */}
         <SelectedTray
           title="Selected Duo Pairs"
+          maxItems={2}
           activeSlotIndex={activeSlot}
           onSlotClick={(idx) => {
             soundFx.playClick();
             setActiveSlot(idx);
           }}
-          customStatusText={`Complete ${3 - validPairsCount} more pairs`}
-          items={[0, 1, 2].map(slotIdx => {
+          customStatusText={`Complete ${2 - validPairsCount} more pairs`}
+          items={[0, 1].map(slotIdx => {
             const pair = pairs[slotIdx];
             const memA = allMembers.find(m => m.id === pair.a || m.name === pair.a);
             const memB = allMembers.find(m => m.id === pair.b || m.name === pair.b);
@@ -266,8 +266,8 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
         <button
           type="button"
           onClick={() => {
-            if (validPairsCount < 3) {
-              toast.warning(`Please complete 3 pairs before proceeding (${validPairsCount}/3 completed)`);
+            if (validPairsCount < 2) {
+              toast.warning(`Please complete 2 pairs before proceeding (${validPairsCount}/2 completed)`);
               return;
             }
             soundFx.playSelect();
@@ -278,7 +278,7 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
             : 'bg-white/40 border-white/30 text-gray-800 opacity-60'
             }`}
         >
-          <span>Next ({validPairsCount}/3 pairs)</span>
+          <span>Next ({validPairsCount}/2 pairs)</span>
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>

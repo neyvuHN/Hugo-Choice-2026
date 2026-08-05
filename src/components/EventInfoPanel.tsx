@@ -94,23 +94,23 @@ export const EventInfoPanel: React.FC<EventInfoPanelProps> = ({
             Voting Rules & Timeline
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-            <div className="p-3.5 sm:p-4 rounded-xl bg-amber-400/20 backdrop-blur-md border border-amber-300/40">
-              <span className="text-[11px] sm:text-xs font-black text-amber-300 tracking-wider uppercase block mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-white/5 opacity-60 backdrop-blur-md border border-white/10">
+              <span className="text-[11px] sm:text-xs font-black text-slate-300 tracking-wider uppercase block mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 Round 1: Nominations
               </span>
-              <span className="text-[11px] sm:text-xs text-amber-200 font-bold font-mono block mb-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+              <span className="text-[11px] sm:text-xs text-slate-400 font-bold font-mono block mb-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 August 1st - August 4th
               </span>
-              <p className="text-xs sm:text-sm text-white font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+              <p className="text-xs sm:text-sm text-white/80 font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 You can nominate up to 3 people/events that you think are worthy for each category. Feel free to boldly nominate yourself!
               </p>
             </div>
 
-            <div className="p-3.5 sm:p-4 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
-              <span className="text-[11px] sm:text-xs font-black text-amber-200 tracking-wider uppercase block mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+            <div className="p-3.5 sm:p-4 rounded-xl bg-amber-400/20 backdrop-blur-md border border-amber-300/40">
+              <span className="text-[11px] sm:text-xs font-black text-amber-300 tracking-wider uppercase block mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                 Round 2: Final Vote
               </span>
-              <span className="text-[11px] sm:text-xs text-amber-100/90 font-bold font-mono block mb-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+              <span className="text-[11px] sm:text-xs text-amber-200 font-bold font-mono block mb-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 August 5th - August 7th
               </span>
               <p className="text-xs sm:text-sm text-white font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
