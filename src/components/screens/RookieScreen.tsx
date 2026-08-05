@@ -47,18 +47,14 @@ export const RookieScreen: React.FC<RookieScreenProps> = ({
 
   const handleSelect = (candidate: Round2Candidate) => {
     const isSelected = selectedList.includes(candidate.name) || selectedList.includes(candidate.id);
-    
+
+    soundFx.playNomineeClick();
     if (isSelected) {
-      soundFx.playNomineeClick();
-      const nextList = selectedList.filter(item => item !== candidate.name && item !== candidate.id);
-      onSelectRookies(nextList);
+      // Deselect if clicking the already-selected item
+      onSelectRookies([]);
     } else {
-      if (selectedList.length >= 1) {
-        toast.warning('You can only select exactly 1 candidate. Deselect your current choice first to change your choice.');
-        return;
-      }
-      soundFx.playNomineeClick();
-      onSelectRookies([...selectedList, candidate.name]);
+      // Directly replace any existing selection
+      onSelectRookies([candidate.name]);
     }
   };
 

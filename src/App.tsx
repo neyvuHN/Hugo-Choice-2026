@@ -6,7 +6,7 @@ import { Header } from './components/Header';
 import { BallotDrawer } from './components/BallotDrawer';
 import { AdminLeaderboardModal } from './components/AdminLeaderboardModal';
 import { GoogleAuthModal } from './components/GoogleAuthModal';
-import { subscribeToAuthChanges, logoutGoogle } from './utils/firebase';
+import { subscribeToAuthChanges, logoutGoogle, subscribeToBallotsFirestore } from './utils/firebase';
 import { saveUserBallot, getSavedBallotForUser } from './utils/ballotStorage';
 import { ToastContainer } from './components/ToastContainer';
 import { GlitterEffectOverlay } from './components/GlitterEffectOverlay';
@@ -107,15 +107,13 @@ export default function App() {
     preloadAllNomineeVideos();
   }, []);
 
-
-  // Save live results to localStorage
+  // Subscribe to Firestore ballots collection for real-time live stats
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY_RESULTS, JSON.stringify(liveResults));
-    } catch {
-      // Ignore
-    }
-  }, [liveResults]);
+    const unsubscribe = subscribeToBallotsFirestore((realResults) => {
+      setLiveResults(realResults);
+    });
+    return () => unsubscribe && unsubscribe();
+  }, []);
 
   // Handle restoring or linking ballot for a logged in Google user
   const handleUserLogin = (user: { name: string; email: string; avatar: string }) => {

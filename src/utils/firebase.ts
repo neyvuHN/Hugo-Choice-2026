@@ -11,7 +11,7 @@ import {
   Auth
 } from 'firebase/auth';
 import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot, Firestore } from 'firebase/firestore';
-import { TeamMoment } from '../types';
+import { TeamMoment, LiveResultsData } from '../types';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
@@ -99,6 +99,93 @@ export const subscribeToMomentsFirestore = (onMomentsUpdate: (moments: TeamMomen
     });
   } catch (err) {
     console.warn("Firestore moments subscription notice:", err);
+    return () => {};
+  }
+};
+
+const INITIAL_RESULTS: LiveResultsData = {
+  totalSubmissions: 0,
+  teams: { prs: 0, hc: 0, bnn: 0, niff: 0 },
+  bestMember: {},
+  bestEvent: {},
+  rookie: {},
+  perfectDuo: {},
+};
+
+/**
+ * Subscribe to ballots_r{round} collection in Firestore and compute
+ * aggregated vote counts in real-time. Calls onUpdate whenever any ballot changes.
+ */
+export const subscribeToBallotsFirestore = (
+  onUpdate: (results: LiveResultsData) => void
+) => {
+  if (!db) return () => {};
+  try {
+    const collectionName = `ballots_r${VOTE_ROUND}`;
+    const ballotsRef = collection(db, collectionName);
+    return onSnapshot(ballotsRef, (snapshot) => {
+      const results: LiveResultsData = {
+        totalSubmissions: 0,
+        teams: { prs: 0, hc: 0, bnn: 0, niff: 0 },
+        bestMember: {},
+        bestEvent: {},
+        rookie: {},
+        perfectDuo: {},
+      };
+
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        // Only count submitted ballots
+        if (!data.isSubmitted) return;
+
+        results.totalSubmissions += 1;
+
+        // Team
+        if (data.selectedTeam) {
+          const t = data.selectedTeam as string;
+          results.teams[t as keyof typeof results.teams] =
+            (results.teams[t as keyof typeof results.teams] || 0) + 1;
+        }
+
+        // Best Member (array or string)
+        const members: string[] = Array.isArray(data.selectedBestMember)
+          ? data.selectedBestMember
+          : data.selectedBestMember ? [data.selectedBestMember] : [];
+        members.forEach((id: string) => {
+          results.bestMember[id] = (results.bestMember[id] || 0) + 1;
+        });
+
+        // Best Event (array or string)
+        const events: string[] = Array.isArray(data.selectedBestEvent)
+          ? data.selectedBestEvent
+          : data.selectedBestEvent ? [data.selectedBestEvent] : [];
+        events.forEach((id: string) => {
+          results.bestEvent[id] = (results.bestEvent[id] || 0) + 1;
+        });
+
+        // Rookie (array or string)
+        const rookies: string[] = Array.isArray(data.selectedRookie)
+          ? data.selectedRookie
+          : data.selectedRookie ? [data.selectedRookie] : [];
+        rookies.forEach((id: string) => {
+          results.rookie[id] = (results.rookie[id] || 0) + 1;
+        });
+
+        // Perfect Duo (array or string)
+        const duos: string[] = Array.isArray(data.selectedDuo)
+          ? data.selectedDuo
+          : data.selectedDuo ? [data.selectedDuo] : [];
+        duos.forEach((id: string) => {
+          results.perfectDuo[id] = (results.perfectDuo[id] || 0) + 1;
+        });
+      });
+
+      onUpdate(results);
+    }, (err) => {
+      console.warn('Firestore ballots subscription error:', err);
+    });
+  } catch (err) {
+    console.warn('Firestore ballots subscription notice:', err);
     return () => {};
   }
 };

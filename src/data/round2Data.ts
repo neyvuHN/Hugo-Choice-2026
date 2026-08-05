@@ -24,7 +24,7 @@ export const ROUND2_EVENTS: Round2Candidate[] = [
   { id: 'e2', name: '[HUGO 𝐂𝐇𝐑𝐈𝐒𝐓𝐌𝐀𝐒 𝟐𝟎𝟐𝟓] - 𝐓𝐇𝐄 𝐆𝐎𝐋𝐃𝐄𝐍 𝐇𝐎𝐔𝐑 🎄✨', avatar: '/Nominees/Best_event/Hugo Christmas.webm', icon: '🎄', tag: 'Holiday Celebration', description: 'Magical Christmas party with heartwarming activities and golden memories.' },
   { id: 'e3', name: '[𝐎𝐍𝐋𝐈𝐍𝐄 𝐓𝐀𝐋𝐊𝐒𝐇𝐎𝐖 - 𝐇𝐔𝐆𝐎 𝐄𝐍𝐆𝐋𝐈𝐒𝐇 𝐂𝐋𝐔𝐁] | TẤM VÉ VIỄN PHƯƠNG', avatar: '/Nominees/Best_event/Online Talkshow.webm', icon: '🎙️', tag: 'Talkshow', description: 'Inspiring online talkshow sharing valuable overseas and career journeys.' },
   { id: 'e4', name: '[𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐍𝐄𝐖𝐁𝐈𝐄 𝟐𝟎𝟐𝟔] - 𝐄𝐂𝐋𝐈𝐏𝐒𝐄', avatar: '/Nominees/Best_event/Welcome Newbie 2026.webm', icon: '🌘', tag: 'Welcome Event', description: 'Grand welcome celebration for the 2026 rookie cohort.' },
-  { id: 'e6', name: '📣 [𝐇𝐔𝐆𝐎 𝐂𝐀𝐌𝐏𝐈𝐍𝐆 𝟐𝟎𝟐𝟔 - 𝐄𝐌𝐁𝐄𝐑𝐋𝐈𝐍𝐄] 📣', avatar: '/Nominees/Best_event/Hugo Camping.webm', icon: '🏕️', tag: 'Camping Retreat', description: 'Unforgettable outdoor camping retreat around Emberline campfire.' },
+  { id: 'e6', name: '📣 [𝐇𝐔𝐆𝐎 𝐂𝐀𝐌𝐏𝐈𝐍𝐆 𝟐𝟎𝟐𝟔] - 𝐄𝐌𝐁𝐄𝐑𝐋𝐈𝐍𝐄 📣', avatar: '/Nominees/Best_event/Hugo Camping.webm', icon: '🏕️', tag: 'Camping Retreat', description: 'Unforgettable outdoor camping retreat around Emberline campfire.' },
   { id: 'e7', name: '[𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐍𝐄𝐖𝐁𝐈𝐄 𝟐𝟎𝟐5] - FLAREON', avatar: '/Nominees/Best_event/Welcome Newbie 2025.webm', icon: '✨', tag: 'Welcome Event', description: 'Fiery and vibrant welcome gathering for the 2025 club members.' }
 ];
 

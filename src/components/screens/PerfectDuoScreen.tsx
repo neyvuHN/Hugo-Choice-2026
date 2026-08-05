@@ -46,17 +46,13 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
   const handleSelect = (candidate: Round2Candidate) => {
     const isSelected = selectedList.includes(candidate.name) || selectedList.includes(candidate.id);
 
+    soundFx.playNomineeClick();
     if (isSelected) {
-      soundFx.playNomineeClick();
-      const nextList = selectedList.filter(item => item !== candidate.name && item !== candidate.id);
-      onSelectDuos(nextList);
+      // Deselect if clicking the already-selected item
+      onSelectDuos([]);
     } else {
-      if (selectedList.length >= 1) {
-        toast.warning('You can only select exactly 1 duo pair. Deselect your current choice first to change your choice.');
-        return;
-      }
-      soundFx.playNomineeClick();
-      onSelectDuos([...selectedList, candidate.name]);
+      // Directly replace any existing selection
+      onSelectDuos([candidate.name]);
     }
   };
 
@@ -81,7 +77,7 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
       <div className="relative flex-1 flex flex-col justify-center min-h-0 max-w-5xl mx-auto w-full py-2">
         <div className="flex flex-col md:flex-row gap-8 items-center w-full">
           {/* Left panel: option list with green glass styling */}
-          <div className="flex flex-col gap-3.5 w-full md:max-w-[340px] shrink-0">
+          <div className="flex flex-col gap-3.5 w-full md:max-w-[390px] shrink-0">
             {ROUND2_DUOS.map((duo) => {
               const isSelected = selectedList.includes(duo.name) || selectedList.includes(duo.id);
 
@@ -90,14 +86,13 @@ export const PerfectDuoScreen: React.FC<PerfectDuoScreenProps> = ({
                   key={duo.id}
                   type="button"
                   onClick={() => handleSelect(duo)}
-                  className={`w-full py-3.5 px-5.5 rounded-2xl cursor-pointer transition-all duration-300 flex items-center justify-between group border ${
-                    isSelected
-                      ? 'bg-emerald-500/35 border-emerald-300 shadow-[0_0_25px_rgba(16,185,129,0.35),inset_0_0_15px_rgba(16,185,129,0.1)] scale-[1.01]'
-                      : 'bg-emerald-950/20 hover:bg-emerald-900/30 border-emerald-300/15 hover:border-emerald-400/40 shadow-lg backdrop-blur-md'
-                  }`}
+                  className={`w-full py-3.5 px-5.5 rounded-2xl cursor-pointer transition-all duration-300 flex items-center justify-between group border ${isSelected
+                    ? 'bg-emerald-500/35 border-emerald-300 shadow-[0_0_25px_rgba(16,185,129,0.35),inset_0_0_15px_rgba(16,185,129,0.1)] scale-[1.01]'
+                    : 'bg-emerald-950/20 hover:bg-emerald-900/30 border-emerald-300/15 hover:border-emerald-400/40 shadow-lg backdrop-blur-md'
+                    }`}
                 >
                   <div className="flex flex-col min-w-0 pr-1">
-                    <span className="font-serif-display font-black text-sm sm:text-base tracking-wide leading-snug text-white line-clamp-2">
+                    <span className="font-serif-display font-black text-sm sm:text-base tracking-wide leading-snug text-white whitespace-nowrap">
                       {duo.name}
                     </span>
                     {duo.id === 'duo-5' ? (
