@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScreenStep, VotingState } from '../types';
 import { soundFx } from '../utils/soundEffects';
+import { getMediaUrl } from '../utils/mediaHelpers';
 import { getPendingApprovals } from '../utils/approvalStorage';
 import {
   Volume2,
@@ -139,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Background Audio */}
       <audio
         ref={audioRef}
-        src="/La Valse de L'Amour.mp3"
+        src={getMediaUrl("/La Valse de L'Amour.mp3")}
         loop
         autoPlay
         onPlay={() => setIsBgMusicPlaying(true)}

@@ -1,4 +1,5 @@
 import { TeamInfo, Candidate, EventOption, DuoPair, LiveResultsData, TeamMoment } from '../types';
+import { getMediaUrl } from '../utils/mediaHelpers';
 
 export const TEAMS: TeamInfo[] = [
   {
@@ -7,7 +8,7 @@ export const TEAMS: TeamInfo[] = [
     icon: '⚡',
     image: '/assets/teams/PRs.png',
     activeImage: '/assets/teams/PRs2.png',
-    heroLogo: '/team_logo/POWER RANGERS.png',
+    heroLogo: getMediaUrl('/team_logo/POWER RANGERS.png'),
     description: 'Justice for all',
     color: '#ef4444',
     glow: 'rgba(239, 68, 68, 0.6)'
@@ -18,7 +19,7 @@ export const TEAMS: TeamInfo[] = [
     icon: '🛡️',
     image: '/assets/teams/HC.png',
     activeImage: '/assets/teams/HC2.png',
-    heroLogo: '/team_logo/Heroes.png',
+    heroLogo: getMediaUrl('/team_logo/Heroes.png'),
     description: 'Stronger Together',
     color: '#3b82f6',
     glow: 'rgba(59, 130, 246, 0.6)'
@@ -29,7 +30,7 @@ export const TEAMS: TeamInfo[] = [
     icon: '🍌',
     image: '/assets/teams/BNN.png',
     activeImage: '/assets/teams/BNN2.png',
-    heroLogo: '/team_logo/BANANA.png',
+    heroLogo: getMediaUrl('/team_logo/BANANA.png'),
     description: 'We come in bunch',
     color: '#eab308',
     glow: 'rgba(234, 179, 8, 0.6)'
@@ -40,7 +41,7 @@ export const TEAMS: TeamInfo[] = [
     icon: '🐾',
     image: '/assets/teams/Niff.png',
     activeImage: '/assets/teams/Niff2.png',
-    heroLogo: '/team_logo/NIFFLER.png',
+    heroLogo: getMediaUrl('/team_logo/NIFFLER.png'),
     description: 'Friends forever',
     color: '#a855f7',
     glow: 'rgba(168, 85, 247, 0.6)'

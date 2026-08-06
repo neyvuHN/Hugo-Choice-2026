@@ -34,7 +34,8 @@ function toArr(val: any): string[] {
   return [];
 }
 
-// Preload all nominee videos at startup (background, non-blocking)
+// Preload all nominee videos at startup (Disabled to save Cloudinary/Hosting bandwidth)
+/*
 function preloadAllNomineeVideos() {
   const allCandidates = [
     ...Object.values(ROUND2_BEST_MEMBERS).flat(),
@@ -45,6 +46,7 @@ function preloadAllNomineeVideos() {
   // Stagger slightly so we don't hammer bandwidth all at once
   setTimeout(() => preloadVideos(extractVideoUrls(allCandidates)), 2000);
 }
+*/
 
 export default function App() {
   const [currentStep, setCurrentStep] = useState<ScreenStep>('landing');
@@ -102,10 +104,12 @@ export default function App() {
     }
   }, [votingState]);
 
-  // Preload all nominee videos early so they're buffered before user reaches voting screens
+  // Preload all nominee videos early so they're buffered before user reaches voting screens (Disabled to save bandwidth)
+  /*
   useEffect(() => {
     preloadAllNomineeVideos();
   }, []);
+  */
 
   // Subscribe to Firestore ballots collection for real-time live stats
   useEffect(() => {

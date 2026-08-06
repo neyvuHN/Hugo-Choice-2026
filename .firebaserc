@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "hugo-choice-2026"
-  }
+    "default": "hugo-choice-2026",
+    "v2": "hugo-choice-2026-v2"
+  },
+  "targets": {},
+  "etags": {}
 }

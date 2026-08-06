@@ -47,7 +47,8 @@ export const GoogleAuthModal: React.FC<GoogleAuthModalProps> = ({
     } catch (err: any) {
       console.error("Google Popup Auth error:", err);
       if (err?.code === 'auth/unauthorized-domain') {
-        setErrorMessage('⚠️ Tên miền "award.hugoclub.org" chưa được ủy quyền trong Firebase! Vui lòng vào Firebase Console ➔ Authentication ➔ Settings ➔ Authorized Domains ➔ Bấm Add domain ➔ Nhập "award.hugoclub.org".');
+        const currentDomain = window.location.hostname;
+        setErrorMessage(`⚠️ Tên miền "${currentDomain}" chưa được ủy quyền trong Firebase! Vui lòng vào Firebase Console của project CŨ (hugo-choice-2026) ➔ Authentication ➔ Settings ➔ Authorized Domains ➔ Bấm Add domain ➔ Nhập "${currentDomain}".`);
       } else if (
         err?.code === 'auth/popup-closed-by-user' ||
         err?.code === 'auth/popup-blocked' ||
@@ -73,7 +74,8 @@ export const GoogleAuthModal: React.FC<GoogleAuthModalProps> = ({
     } catch (err: any) {
       console.error("Google Redirect error:", err);
       if (err?.code === 'auth/unauthorized-domain') {
-        setErrorMessage('⚠️ Tên miền "award.hugoclub.org" chưa được ủy quyền trong Firebase! Vui lòng vào Firebase Console ➔ Authentication ➔ Settings ➔ Authorized Domains ➔ Nhập "award.hugoclub.org".');
+        const currentDomain = window.location.hostname;
+        setErrorMessage(`⚠️ Tên miền "${currentDomain}" chưa được ủy quyền trong Firebase! Vui lòng vào Firebase Console của project CŨ (hugo-choice-2026) ➔ Authentication ➔ Settings ➔ Authorized Domains ➔ Bấm Add domain ➔ Nhập "${currentDomain}".`);
       } else {
         setErrorMessage(`⚠️ Đăng nhập chuyển trang thất bại: ${err?.message || 'Lỗi không xác định'}`);
       }
