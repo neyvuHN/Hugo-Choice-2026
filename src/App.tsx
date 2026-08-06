@@ -6,7 +6,13 @@ import { Header } from './components/Header';
 import { BallotDrawer } from './components/BallotDrawer';
 import { AdminLeaderboardModal } from './components/AdminLeaderboardModal';
 import { GoogleAuthModal } from './components/GoogleAuthModal';
-import { subscribeToAuthChanges, logoutGoogle, subscribeToBallotsFirestore } from './utils/firebase';
+import {
+  subscribeToAuthChanges,
+  logoutGoogle,
+  subscribeToBallotsFirestore,
+  subscribeToVotingStatus,
+  updateVotingStatus
+} from './utils/firebase';
 import { saveUserBallot, getSavedBallotForUser } from './utils/ballotStorage';
 import { ToastContainer } from './components/ToastContainer';
 import { GlitterEffectOverlay } from './components/GlitterEffectOverlay';
@@ -23,6 +29,7 @@ import { RookieScreen } from './components/screens/RookieScreen';
 import { PerfectDuoScreen } from './components/screens/PerfectDuoScreen';
 import { SubmissionScreen } from './components/screens/SubmissionScreen';
 import { StatisticsScreen } from './components/screens/StatisticsScreen';
+import { VotingClosedScreen } from './components/screens/VotingClosedScreen';
 
 const VOTE_ROUND = import.meta.env.VITE_VOTE_ROUND || '1';
 const STORAGE_KEY_VOTE = `hugo_award_2026_user_state_r${VOTE_ROUND}`;
@@ -53,6 +60,7 @@ export default function App() {
   const [isBallotDrawerOpen, setIsBallotDrawerOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isGoogleAuthOpen, setIsGoogleAuthOpen] = useState(false);
+  const [isVotingClosed, setIsVotingClosed] = useState(false);
 
   // Voting State
   const [votingState, setVotingState] = useState<VotingState>(() => {
@@ -118,6 +126,34 @@ export default function App() {
     });
     return () => unsubscribe && unsubscribe();
   }, []);
+
+  // Subscribe to real-time voting status (open/closed) from Firestore
+  useEffect(() => {
+    const unsubscribe = subscribeToVotingStatus((closed) => {
+      setIsVotingClosed(closed);
+    });
+    return () => unsubscribe && unsubscribe();
+  }, []);
+
+  // Route Guard: Redirect non-admin users to voting_closed screen if voting is closed
+  useEffect(() => {
+    const isAdmin = votingState.userEmail?.toLowerCase() === 'hugoclub.dut@gmail.com';
+    if (isVotingClosed && !isAdmin) {
+      if (currentStep !== 'voting_closed') {
+        navigateTo('voting_closed');
+      }
+    } else if (!isVotingClosed && currentStep === 'voting_closed') {
+      navigateTo('landing');
+    }
+  }, [isVotingClosed, votingState.userEmail, currentStep]);
+
+  const handleToggleVotingStatus = async (closed: boolean) => {
+    try {
+      await updateVotingStatus(closed);
+    } catch (err) {
+      console.error("Failed to update voting status:", err);
+    }
+  };
 
   // Handle restoring or linking ballot for a logged in Google user
   const handleUserLogin = (user: { name: string; email: string; avatar: string }) => {
@@ -477,11 +513,23 @@ export default function App() {
           />
         )}
 
+        {currentStep === 'voting_closed' && (
+          <VotingClosedScreen />
+        )}
+
         {currentStep === 'statistics' && (
           <StatisticsScreen
             results={liveResults}
-            onBack={() => navigateTo('landing')}
+            onBack={() => {
+              if (isVotingClosed) {
+                navigateTo('voting_closed');
+              } else {
+                navigateTo('landing');
+              }
+            }}
             votingState={votingState}
+            isVotingClosed={isVotingClosed}
+            onToggleVotingStatus={handleToggleVotingStatus}
           />
         )}
       </main>
@@ -506,6 +554,7 @@ export default function App() {
       <GoogleAuthModal
         isOpen={isGoogleAuthOpen}
         onClose={() => setIsGoogleAuthOpen(false)}
+        isVotingClosed={isVotingClosed}
         onLoginSuccess={(user) => {
           handleUserLogin(user);
         }}

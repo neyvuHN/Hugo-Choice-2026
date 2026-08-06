@@ -9,7 +9,8 @@ export type ScreenStep =
   | 'perfect_duo'
   | 'submission'
   | 'completed'
-  | 'statistics';
+  | 'statistics'
+  | 'voting_closed';
 
 export type HugoTeam = 'prs' | 'hc' | 'bnn' | 'niff';
 

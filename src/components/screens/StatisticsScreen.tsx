@@ -24,13 +24,16 @@ import {
   TrendingDown,
   TrendingUp,
   Heart,
-  XCircle
+  XCircle,
+  Settings
 } from 'lucide-react';
 
 interface StatisticsScreenProps {
   results: LiveResultsData;
   onBack: () => void;
   votingState: VotingState;
+  isVotingClosed?: boolean;
+  onToggleVotingStatus?: (isClosed: boolean) => void;
 }
 
 const TEAM_INFO_MAP: Record<HugoTeam, { name: string; color: string; bg: string; icon: string }> = {
@@ -40,7 +43,13 @@ const TEAM_INFO_MAP: Record<HugoTeam, { name: string; color: string; bg: string;
   niff: { name: 'Nifflers', color: '#a855f7', bg: 'rgba(168, 85, 247, 0.2)', icon: '🐾' }
 };
 
-export const StatisticsScreen: React.FC<StatisticsScreenProps> = ({ results, onBack, votingState }) => {
+export const StatisticsScreen: React.FC<StatisticsScreenProps> = ({
+  results,
+  onBack,
+  votingState,
+  isVotingClosed = false,
+  onToggleVotingStatus
+}) => {
   const [activeTab, setActiveTab] = useState<'members' | 'events' | 'rookies' | 'duos' | 'approvals'>('members');
   const [showZeroVotes, setShowZeroVotes] = useState<boolean>(true); // DEFAULT TO SHOW ALL NOMINEES
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -277,6 +286,44 @@ export const StatisticsScreen: React.FC<StatisticsScreenProps> = ({ results, onB
               })}
             </div>
           </div>
+
+          {/* Admin Settings Card */}
+          {isAdmin && (
+            <div className="p-5 rounded-3xl bg-black/85 border border-amber-300/40 backdrop-blur-3xl shadow-2xl flex flex-col gap-4">
+              <h3 className="font-serif-display text-sm font-extrabold uppercase tracking-widest text-amber-300 flex items-center gap-2 border-b border-white/10 pb-2">
+                <Settings className="w-4 h-4 text-amber-300" />
+                <span>Cài đặt hệ thống</span>
+              </h3>
+              
+              <div className="flex items-center justify-between p-3 rounded-2xl bg-white/5 border border-white/15">
+                <div className="pr-2">
+                  <span className="font-serif-display text-xs font-black text-white block">Cổng bình chọn</span>
+                  <span className="text-[10px] text-white/60 leading-tight block mt-0.5 font-sans-clean font-semibold">
+                    {isVotingClosed ? 'Đã khóa nhận phiếu' : 'Đang mở nhận phiếu'}
+                  </span>
+                </div>
+                
+                <button
+                  onClick={() => {
+                    soundFx.playClick();
+                    if (onToggleVotingStatus) {
+                      onToggleVotingStatus(!isVotingClosed);
+                    }
+                  }}
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                    isVotingClosed ? 'bg-rose-600' : 'bg-emerald-600'
+                  }`}
+                  title={isVotingClosed ? "Mở nhận bình chọn" : "Khóa nhận bình chọn"}
+                >
+                  <span
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      isVotingClosed ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Right Side: Tabbed Category Leaderboards */}

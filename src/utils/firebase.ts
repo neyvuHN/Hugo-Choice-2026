@@ -284,3 +284,47 @@ export const subscribeToAuthChanges = (
     }
   });
 };
+
+/**
+ * Subscribe to the voting configuration document in Firestore.
+ * If document doesn't exist or isFirebaseConfigured is false, default to false (voting open).
+ */
+export const subscribeToVotingStatus = (onUpdate: (isClosed: boolean) => void) => {
+  if (!db) {
+    onUpdate(false);
+    return () => {};
+  }
+  try {
+    const docRef = doc(db, 'config', 'voting');
+    return onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        onUpdate(Boolean(data.isVotingClosed));
+      } else {
+        onUpdate(false);
+      }
+    }, (err) => {
+      console.warn("Firestore voting status subscription error:", err);
+      onUpdate(false);
+    });
+  } catch (err) {
+    console.warn("Firestore voting status subscription notice:", err);
+    onUpdate(false);
+    return () => {};
+  }
+};
+
+/**
+ * Update the voting status document in Firestore.
+ */
+export const updateVotingStatus = async (isClosed: boolean) => {
+  if (!db) return;
+  try {
+    const docRef = doc(db, 'config', 'voting');
+    await setDoc(docRef, { isVotingClosed: isClosed }, { merge: true });
+  } catch (err) {
+    console.error("Could not update voting status in Firestore:", err);
+    throw err;
+  }
+};
+

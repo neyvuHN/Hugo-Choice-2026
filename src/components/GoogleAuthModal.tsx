@@ -6,12 +6,14 @@ import { signInWithGoogle, signInWithGoogleRedirect, isFirebaseConfigured, Googl
 interface GoogleAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  isVotingClosed?: boolean;
   onLoginSuccess: (user: GoogleUserProfile) => void;
 }
 
 export const GoogleAuthModal: React.FC<GoogleAuthModalProps> = ({
   isOpen,
   onClose,
+  isVotingClosed = false,
   onLoginSuccess
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -142,6 +144,16 @@ export const GoogleAuthModal: React.FC<GoogleAuthModalProps> = ({
               Đăng nhập tài khoản Google để xác thực phiếu bầu chính thức
             </p>
           </div>
+
+          {/* Voting Closed Banner */}
+          {isVotingClosed && (
+            <div className="mt-4 p-3.5 rounded-2xl bg-rose-500/20 border border-rose-500/50 text-rose-200 text-xs flex items-start space-x-2.5 shadow-inner">
+              <AlertCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+              <div className="flex-1 leading-relaxed font-semibold">
+                ⚠️ Cổng bình chọn đã đóng! Chỉ tài khoản Ban tổ chức (Admin) mới có thể đăng nhập lúc này để mở lại hoặc xem số liệu.
+              </div>
+            </div>
+          )}
 
           {/* Error Alert Box */}
           {errorMessage && (
